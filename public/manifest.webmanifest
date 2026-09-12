@@ -1,0 +1,13 @@
+{
+  "name": "年轮 Nianlun",
+  "short_name": "年轮",
+  "description": "打卡与记录的个人生活数据库",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#5B9BF3",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

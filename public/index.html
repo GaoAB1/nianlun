@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="年轮 —— 打卡与记录的个人生活数据库">
+<title>年轮 Nianlun</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="ic-home" viewBox="0 0 24 24"><path d="M3.5 11.2 12 4.2l8.5 7v7.3a1.5 1.5 0 0 1-1.5 1.5h-4v-6h-6v6H5a1.5 1.5 0 0 1-1.5-1.5z"/></symbol>
+<symbol id="ic-timeline" viewBox="0 0 24 24"><circle cx="6.5" cy="6.5" r="1.8"/><circle cx="6.5" cy="17.5" r="1.8"/><path d="M6.5 8.3v7.4"/><path d="M10.5 6.5h9"/><path d="M10.5 17.5h6"/></symbol>
+<symbol id="ic-chart" viewBox="0 0 24 24"><path d="M4 20h16"/><path d="M7 20v-6"/><path d="M12 20V7"/><path d="M17 20v-9"/></symbol>
+<symbol id="ic-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></symbol>
+<symbol id="ic-settings" viewBox="0 0 24 24"><path d="M4 7.5h5M13.5 7.5H20M4 16.5h6M14.5 16.5H20"/><circle cx="11" cy="7.5" r="2.2"/><circle cx="12" cy="16.5" r="2.2"/></symbol>
+<symbol id="ic-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="ic-check" viewBox="0 0 24 24"><path d="M4.5 12.5 9.5 17.5 19.5 6.5"/></symbol>
+<symbol id="ic-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
+<symbol id="ic-trash" viewBox="0 0 24 24"><path d="M4.5 7h15"/><path d="M9.5 7V4.8h5V7"/><path d="M6.5 7l.9 12a1.2 1.2 0 0 0 1.2 1.1h6.8a1.2 1.2 0 0 0 1.2-1.1L17.5 7"/></symbol>
+<symbol id="ic-edit" viewBox="0 0 24 24"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17z"/></symbol>
+<symbol id="ic-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="ic-left" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+<symbol id="ic-right" viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5"/></symbol>
+<symbol id="ic-play" viewBox="0 0 24 24"><path d="M8 5.5 18.5 12 8 18.5z" fill="currentColor" stroke="none"/></symbol>
+<symbol id="ic-pause" viewBox="0 0 24 24"><path d="M9.5 5.5v13M14.5 5.5v13"/></symbol>
+<symbol id="ic-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 4.5V9h-4.5"/></symbol>
+<symbol id="ic-image" viewBox="0 0 24 24"><rect x="3.8" y="5" width="16.4" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4.5 16.5 9.5 12l3.5 3.4 2.5-1.9 4 3.3"/></symbol>
+<symbol id="ic-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20.5c0-3.6 3.4-5.6 7.5-5.6s7.5 2 7.5 5.6"/></symbol>
+<symbol id="ic-users" viewBox="0 0 24 24"><circle cx="9.5" cy="8.5" r="3.3"/><path d="M3.5 20c0-3.2 2.8-5 6-5s6 1.8 6 5"/><path d="M16 5.6a3.3 3.3 0 0 1 0 6.4"/><path d="M17.5 15.4c1.9.5 3.2 1.8 3.2 3.6"/></symbol>
+<symbol id="ic-tag" viewBox="0 0 24 24"><path d="M4 4.8h6.6l9 9-6.4 6.4-9-9z"/><circle cx="8.4" cy="8.4" r="1.5"/></symbol>
+<symbol id="ic-folder" viewBox="0 0 24 24"><path d="M4 6.5h5.2l1.8 2.2h9V19H4z"/></symbol>
+<symbol id="ic-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 19.5h14"/></symbol>
+<symbol id="ic-upload" viewBox="0 0 24 24"><path d="M12 20V9"/><path d="M7.5 13.5 12 9l4.5 4.5"/><path d="M5 4.5h14"/></symbol>
+<symbol id="ic-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3.5v2M12 18.5v2M3.5 12h2M18.5 12h2M6 6l1.4 1.4M16.6 16.6 18 18M6 18l1.4-1.4M16.6 7.4 18 6"/></symbol>
+<symbol id="ic-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8.2 8.2 0 1 0 10.5 10.5"/></symbol>
+<symbol id="ic-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6"/><path d="M15.2 15.2 20 20"/></symbol>
+<symbol id="ic-archive" viewBox="0 0 24 24"><rect x="3.8" y="4.8" width="16.4" height="4.4" rx="1.6"/><path d="M5.6 9.2v9a1.6 1.6 0 0 0 1.6 1.6h9.6a1.6 1.6 0 0 0 1.6-1.6v-9"/><path d="M10 13h4"/></symbol>
+<symbol id="ic-logout" viewBox="0 0 24 24"><path d="M14.5 4.5h4.2v15h-4.2"/><path d="M11.5 12H3.5"/><path d="M8 8.5 3.5 12 8 15.5"/></symbol>
+<symbol id="ic-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="10.5" height="10.5" rx="2.6"/><path d="M15 5.5H6.6A1.6 1.6 0 0 0 5 7.1V15"/></symbol>
+<symbol id="ic-flame" viewBox="0 0 24 24"><path d="M12 3.5c3.4 4.2 5.5 6.5 5.5 9.5a5.5 5.5 0 0 1-11 0c0-1.9.8-3.3 2.4-4.9"/></symbol>
+<symbol id="ic-more" viewBox="0 0 24 24"><circle cx="5.5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="18.5" cy="12" r="1.6" fill="currentColor" stroke="none"/></symbol>
+<symbol id="ic-calendar" viewBox="0 0 24 24"><rect x="3.8" y="5.5" width="16.4" height="14" rx="3"/><path d="M3.8 10h16.4"/><path d="M8.5 3.8v3.4M15.5 3.8v3.4"/></symbol>
+<symbol id="ic-timer" viewBox="0 0 24 24"><circle cx="12" cy="13.5" r="7"/><path d="M12 10v3.5l2.4 1.6"/><path d="M9.5 3.5h5"/></symbol>
+<symbol id="ic-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="3"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+<symbol id="ic-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="3.4"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/></symbol>
+<symbol id="ic-down" viewBox="0 0 24 24"><path d="M6 9.5 12 15.5 18 9.5"/></symbol>
+<symbol id="ic-up" viewBox="0 0 24 24"><path d="M6 14.5 12 8.5 18 14.5"/></symbol>
+<symbol id="ic-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+<symbol id="ic-sparkle" viewBox="0 0 24 24"><path d="M12 3.5 13.9 9 19.5 11 13.9 13 12 18.5 10.1 13 4.5 11 10.1 9z"/></symbol>
+</defs></svg>
+
+<div id="boot" class="boot">
+  <div class="boot-ring"></div>
+  <p class="boot-text">正在唤醒年轮…</p>
+</div>
+
+<div id="view" class="view" hidden></div>
+<div id="layer" class="layer"></div>
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>

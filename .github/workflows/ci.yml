@@ -1,0 +1,103 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  test:
+    name: 单元与集成测试
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      # 项目零依赖，无需 npm install；node:sqlite 在 Node 24 已默认可用
+      - name: 接口集成测试（22 项）
+        run: node --test tests/api.test.js
+
+      - name: 静态资源冒烟测试
+        run: node tests/smoke.mjs
+
+  docker:
+    name: 构建并推送镜像
+    needs: test
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 读取版本号
+        id: ver
+        run: echo "version=$(node -p "require('./package.json').version")" >> "$GITHUB_OUTPUT"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 计算镜像标签
+        id: meta
+        env:
+          REGISTRY: ${{ env.REGISTRY }}
+          IMAGE_NAME: ${{ env.IMAGE_NAME }}
+        run: |
+          IMAGE="${REGISTRY}/${IMAGE_NAME,,}"
+          SHORT_SHA="${GITHUB_SHA:0:7}"
+          echo "short_sha=${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
+          {
+            echo "tags<<EOF"
+            echo "${IMAGE}:latest"
+            echo "${IMAGE}:v${{ steps.ver.outputs.version }}"
+            echo "${IMAGE}:sha-${SHORT_SHA}"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          build-args: |
+            VERSION=${{ steps.ver.outputs.version }}
+
+      - name: 拉起容器做冒烟验证
+        env:
+          IMAGE: ${{ steps.meta.outputs.image }}
+          SHORT_SHA: ${{ steps.meta.outputs.short_sha }}
+        run: |
+          docker run -d --name nianlun-smoke -p 18080:8080 \
+            -e PORT=8080 -e DATA_DIR=/data "${IMAGE}:sha-${SHORT_SHA}"
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:18080/api/health > /dev/null; then
+              echo "容器健康检查通过"
+              curl -fsS http://127.0.0.1:18080/api/health
+              docker rm -f nianlun-smoke > /dev/null
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::error::容器健康检查失败"
+          docker logs nianlun-smoke
+          exit 1

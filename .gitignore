@@ -1,0 +1,22 @@
+# 运行时数据（SQLite 库 + 上传图片），绝不提交
+data/
+data-ui/
+data-smoke/
+
+# 浏览器测试的临时 profile
+.chrome-profile/
+
+# 编辑与系统文件
+.vscode/
+.idea/
+.workbuddy/
+.DS_Store
+Thumbs.db
+
+# 日志与临时文件
+*.log
+*.tmp
+npm-debug.log*
+
+# 本地备份
+nianlun-backup-*.json

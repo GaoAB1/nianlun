@@ -1,0 +1,8 @@
+# 统一换行符，避免 Windows 检出时把 Dockerfile / 脚本改成 CRLF
+* text=auto eol=lf
+
+# 二进制文件
+*.png binary
+*.webp binary
+*.ico binary
+*.woff2 binary

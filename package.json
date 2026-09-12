@@ -1,0 +1,21 @@
+{
+  "name": "nianlun",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "年轮 Nianlun — 打卡与记录的个人生活数据库（零依赖 Node + SQLite）",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node bin/nianlun.mjs",
+    "serve": "node server.js",
+    "test": "node --experimental-sqlite --test tests/api.test.js",
+    "test:smoke": "node tests/smoke.mjs",
+    "test:ui": "node tests/ui.mjs",
+    "test:all": "npm run test && node tests/smoke.mjs && node tests/ui.mjs",
+    "docker:up": "docker compose up -d --build",
+    "docker:logs": "docker compose logs -f",
+    "docker:down": "docker compose down"
+  }
+}
