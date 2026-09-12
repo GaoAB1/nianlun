@@ -2,6 +2,8 @@ services:
   nianlun:
     build:
       context: .
+    # 想直接用 CI 构建好的镜像，注释掉上面的 build: 并打开下面这行
+    # image: ghcr.io/gaoab1/nianlun:latest
     image: nianlun:1.0.0
     container_name: nianlun
     restart: unless-stopped

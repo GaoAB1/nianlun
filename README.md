@@ -1,5 +1,8 @@
 # 年轮 Nianlun
 
+[![CI](https://github.com/GaoAB1/nianlun/actions/workflows/ci.yml/badge.svg)](https://github.com/GaoAB1/nianlun/actions/workflows/ci.yml)
+[![Docker Image](https://img.shields.io/badge/ghcr.io-gaoab1%2Fnianlun-5B9BF3)](https://github.com/GaoAB1/nianlun/pkgs/container/nianlun)
+
 > 一圈一圈，把日子记下来。
 > 打卡与记录的个人生活数据库 —— 零依赖 Node + SQLite，Docker 一键部署。
 
@@ -41,6 +44,25 @@
 > `bin/nianlun.mjs` 会按当前 Node 版本自动附加参数，两种环境都能直接跑。
 
 ## 快速开始（Docker）
+
+### 方式一：直接拉取现成镜像
+
+镜像由 GitHub Actions 在每次推送时自动构建并推送到 GHCR（已通过容器内健康检查）：
+
+```bash
+mkdir -p data
+
+docker run -d --name nianlun \
+  --restart unless-stopped \
+  -p 8080:8080 \
+  -e TZ=Asia/Shanghai \
+  -v "$(pwd)/data:/data" \
+  ghcr.io/gaoab1/nianlun:latest
+```
+
+也可以用 `docker compose up -d`（默认走 `build:` 本地构建，把 `image:` 那行的注释切换一下即可改成拉取远端镜像）。
+
+### 方式二：本地构建
 
 ```bash
 # 1. 准备数据目录（容器内以 uid 1000 运行，需要写权限）
