@@ -1,6 +1,6 @@
 {
   "name": "nianlun",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "type": "module",
   "description": "年轮 Nianlun — 打卡与记录的个人生活数据库（零依赖 Node + SQLite）",

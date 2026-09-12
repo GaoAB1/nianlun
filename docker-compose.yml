@@ -4,7 +4,7 @@ services:
       context: .
     # 想直接用 CI 构建好的镜像，注释掉上面的 build: 并打开下面这行
     # image: ghcr.io/gaoab1/nianlun:latest
-    image: nianlun:1.0.0
+    image: nianlun:1.0.1
     container_name: nianlun
     restart: unless-stopped
 
@@ -17,6 +17,10 @@ services:
       SITE_NAME: 年轮
       PORT: "8080"
       DATA_DIR: /data
+      # 容器内运行身份。默认 1000:1000；如果宿主机数据目录属主是别的 uid/gid，
+      # 改成对应值即可，入口脚本会自动把目录属主修正过来，无需手动 chown。
+      PUID: "1000"
+      PGID: "1000"
       # 用 HTTPS 反向代理（Nginx / Caddy / 群晖反代）时打开下面这行，
       # 让会话 Cookie 只在加密连接上传输。用 IP 直连时保持注释。
       # COOKIE_SECURE: "1"

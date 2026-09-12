@@ -106,8 +106,9 @@ npm run serve    # 直接跑 server.js（Node 23.4+ 或加 --experimental-sqlite
 | --- | --- | --- |
 | `PORT` | `8080` | 监听端口 |
 | `HOST` | `0.0.0.0` | 监听地址 |
-| `DATA_DIR` | `./data` | SQLite 与上传图片目录 |
+| `DATA_DIR` | `/data` | SQLite 与上传图片目录 |
 | `SITE_NAME` | `年轮` | 站点名称（管理员也可在设置里改） |
+| `PUID` / `PGID` | `1000` / `1000` | 容器内运行身份，入口脚本会把数据目录属主自动修正成它 |
 | `COOKIE_SECURE` | 未设置 | 设为 `1` 时 Cookie 仅经 HTTPS 传输 |
 
 ## 测试
@@ -157,8 +158,9 @@ nianlun/
 
 ## 常见问题
 
-**启动报 `EACCES` / `SQLITE_CANTOPEN`**
-容器内以 uid 1000 运行，宿主机 `./data` 目录需要给它写权限：`chown -R 1000:1000 ./data`。
+**启动时报 `EACCES` / `SQLITE_CANTOPEN`，容器反复重启**
+v1.0.1 起已自动处理：入口脚本以 root 启动，把数据目录属主修正为 `PUID:PGID` 后降权运行，宿主机目录被 Docker 以 root 创建也能正常工作，**不需要手动 chown**。
+如果升级旧镜像后仍报错，确认拉的是 `ghcr.io/gaoab1/nianlun:latest`（或 ≥1.0.1）；仍不行时看日志末尾，脚本会明确指出是只读挂载还是属主问题。手动兜底：`chown -R 1000:1000 <宿主机数据目录>`。
 
 **忘记管理员密码**
 删除 `data/nianlun.db` 会连数据一起丢。更稳妥：用另一个管理员账号在「设置 → 用户与权限」里重置；只有一名管理员时，可以临时把 `data/nianlun.db` 用 SQLite 工具打开，删除 `sessions` 表中该用户的记录后重设 `password_hash`。

@@ -23,8 +23,27 @@ const config = {
   version: process.env.APP_VERSION || '1.0.0',
 };
 config.uploadDir = path.join(config.dataDir, 'uploads');
-fs.mkdirSync(config.dataDir, { recursive: true });
-fs.mkdirSync(config.uploadDir, { recursive: true });
+
+/** 数据目录不可写时给出可操作的提示，而不是一屏堆栈 */
+function ensureWritableDir(dir) {
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+  } catch (err) {
+    if (err.code === 'EACCES' || err.code === 'EPERM' || err.code === 'EROFS') {
+      console.error(`\n[年轮] ✗ 数据目录不可写：${dir}（${err.code}）`);
+      console.error('        进程运行身份：uid=' + (typeof process.getuid === 'function' ? process.getuid() : 'n/a'));
+      console.error('        处理办法（任选其一）：');
+      console.error('        1. 用新版镜像启动 —— 入口脚本会自动把数据目录属主修正为 PUID:PGID；');
+      console.error('        2. 宿主机上手动修正属主：chown -R 1000:1000 <宿主机数据目录>；');
+      console.error('        3. 在 docker-compose.yml 里把 PUID / PGID 设成该目录实际属主的 uid/gid；');
+      console.error('        4. 确认挂载卷不是只读的（检查 volumes 是否带了 :ro）。\n');
+      process.exit(1);
+    }
+    throw err;
+  }
+}
+ensureWritableDir(config.dataDir);
+ensureWritableDir(config.uploadDir);
 
 const db = openDatabase(path.join(config.dataDir, 'nianlun.db'));
 setSetting(db, 'site_name', process.env.SITE_NAME || getSetting(db, 'site_name', '年轮'));
