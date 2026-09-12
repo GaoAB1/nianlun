@@ -131,5 +131,5 @@ jobs:
 
           check "镜像内建数据目录" 18080 nianlun-smoke
           check "挂载 root 属主目录" 18081 nianlun-smoke-bind
-          docker logs nianlun-smoke-bind 2>&1 | head -20 || true
-          rm -rf "${GITHUB_WORKSPACE}/data-smoke"
+          # 目录已被入口脚本 chown 成 uid 1000，runner 用户删不掉，用 sudo 清理
+          sudo rm -rf "${GITHUB_WORKSPACE}/data-smoke" || true
